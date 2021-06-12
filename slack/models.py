@@ -8,7 +8,7 @@ from urllib.parse import unquote_plus, quote
 class Memegen:
 
     def __init__(self):
-        self.BASE_URL = "https://memegen.link"
+        self.BASE_URL = "https://api.memegen.link"
         self.template_info = self.get_template_info()
         self.valid_templates = self.get_valid_templates()
         self.template_list = self.get_template_list()
@@ -17,13 +17,14 @@ class Memegen:
         return [x[0] for x in self.template_info]
 
     def get_template_info(self):
-        template = requests.get(self.BASE_URL + "/api/templates/").json()
+        templates = requests.get(self.BASE_URL + "/templates/").json()
 
         data = []
 
-        for description, api_link in template.items():
-            alias = api_link.split("/api/templates/")[1]
-            link = "https://memegen.link/{}/your-text/goes-here.jpg".format(alias)
+        for template in templates:
+            alias = template["id"]
+            description = template["name"]
+            link = "https://api.memegen.link/images/{}/your-text/goes-here.png".format(alias)
 
             data.append((alias, description, link))
 
