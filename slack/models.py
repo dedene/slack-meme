@@ -91,8 +91,8 @@ class Slack:
         return {"username": username, "icon_url": icon_url}
 
     def post_meme_to_webhook(self, payload):
-        requests.post(self.WEBHOOK_URL, json=payload)
-
+        url = self.BASE_URL + "/chat.postMessage"
+        requests.post(url, json=payload, headers={'Authorization': "Bearer {0}".format(self.API_TOKEN)})
 
 def parse_text_into_params(text):
     # remove the semicolon at the end, if there is one
