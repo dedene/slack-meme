@@ -55,13 +55,12 @@ class Memegen:
 
     def help(self):
         return "\n".join([
-            "Welcome to Slack Meme!",
-            'Check me out on <https://github.com/nicolewhite/slack-meme|GitHub>.',
-            "**> Commands:**",
-            "* `/meme template_name;top_row;bottom_row` generate a meme",
+            "Use me to send custom meme pictures!",
+            "** Commands:**",
+            "- `/meme template_name;top_row;bottom_row` generate a meme",
             "    (NOTE: template_name can also be a URL to an image)",
-            "* `/meme templates` View templates",
-            "* `/meme help` Shows this menu"
+            "- `/meme templates` View templates",
+            "- `/meme help` Shows this menu"
         ])
 
 
@@ -82,8 +81,8 @@ class Slack:
         self.SLASH_COMMAND_TOKEN = os.environ.get("SLACK_VERIFICATION_TOKEN")
 
     def find_user_info(self, user_id):
-        url = self.BASE_URL + "/users.info?token={0}&user={1}".format(self.API_TOKEN, user_id)
-        response = requests.get(url)
+        url = self.BASE_URL + "/users.info?user={0}".format(user_id)
+        response = requests.get(url, headers={'Authorization': "Bearer {0}".format(self.API_TOKEN)})
 
         user = response.json()["user"]
         username = user["profile"]["display_name"]
