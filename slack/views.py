@@ -47,4 +47,4 @@ def meme():
     except Exception as e:
         return e
 
-    return "Success!", 200
+    return "", 200
