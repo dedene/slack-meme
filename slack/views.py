@@ -35,7 +35,7 @@ def meme():
         app.logger.debug("valid templates: \"%s\"", memegen.valid_templates)
         return memegen.bad_template(template)
 
-    payload = {"channel": channel_id}
+    payload = {"channel": channel_id, "as_user": true}
     user = slack.find_user_info(user_id)
     payload.update(user)
 
@@ -44,7 +44,8 @@ def meme():
     else:
       attachments = [{"image_url": meme_url, "fallback": "; ".join([top])}]
     payload.update({"attachments": attachments})
-
+    
+    app.logger.debug("payload: \"%s\"", payload)
     try:
         slack.post_meme_to_webhook(payload)
     except Exception as e:
