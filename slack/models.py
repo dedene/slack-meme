@@ -77,7 +77,6 @@ class Slack:
     def __init__(self):
         self.BASE_URL = "https://slack.com/api"
         self.API_TOKEN = os.environ.get("SLACK_API_TOKEN")
-        self.WEBHOOK_URL = os.environ.get("SLACK_WEBHOOK_URL").strip()
         self.SLASH_COMMAND_TOKEN = os.environ.get("SLACK_VERIFICATION_TOKEN")
 
     def find_user_info(self, user_id):
