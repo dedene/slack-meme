@@ -10,6 +10,7 @@ slack = Slack()
 def meme():
     data = request.form if request.method == "POST" else request.args
     token, text, channel_id, user_id = [data[key] for key in ("token", "text", "channel_id", "user_id")]
+    app.logger.debug("Got message from channel: \"%s\"", channel_id)
     text = text.strip()
 
     if token != slack.SLASH_COMMAND_TOKEN:
@@ -49,6 +50,7 @@ def meme():
     try:
         slack.post_meme_to_webhook(payload)
     except Exception as e:
+        app.logger.error("Error: \"%s\"", e)
         return e
 
     return "", 200
