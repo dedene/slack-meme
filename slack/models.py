@@ -84,7 +84,7 @@ class Slack:
         response = requests.get(url, headers={'Authorization': "Bearer {0}".format(self.API_TOKEN)})
 
         user = response.json()["user"]
-        username = user["profile"]["display_name"]
+        username = user["profile"]["real_name"]
         icon_url = user["profile"]["image_48"]
 
         return {"username": username, "icon_url": icon_url}

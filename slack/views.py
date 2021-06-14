@@ -35,7 +35,7 @@ def meme():
         app.logger.debug("valid templates: \"%s\"", memegen.valid_templates)
         return memegen.bad_template(template)
 
-    payload = {"channel": channel_id, "as_user": 'true'}
+    payload = {"channel": channel_id, "as_user": 'false'}
     user = slack.find_user_info(user_id)
     payload.update(user)
 
