@@ -89,8 +89,10 @@ class Slack:
 
         return {"username": username, "icon_url": icon_url}
 
-    def post_meme_to_webhook(self, payload):
+    def post_meme_to_webhook(self, response_url, payload):
         url = self.BASE_URL + "/chat.postMessage"
+        if response_url:
+          url = response_url
         requests.post(url, json=payload, headers={'Authorization': "Bearer {0}".format(self.API_TOKEN)})
 
 def parse_text_into_params(text):

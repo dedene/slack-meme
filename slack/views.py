@@ -9,8 +9,9 @@ slack = Slack()
 @app.route("/", methods=["GET", "POST"])
 def meme():
     data = request.form if request.method == "POST" else request.args
-    token, text, channel_id, user_id = [data[key] for key in ("token", "text", "channel_id", "user_id")]
+    token, text, channel_id, response_url, user_id = [data[key] for key in ("token", "text", "channel_id", "response_url", "user_id")]
     app.logger.debug("Got message from channel: \"%s\"", channel_id)
+    app.logger.debug("Got respond_url: \"%s\"", response_url)
     text = text.strip()
 
     if token != slack.SLASH_COMMAND_TOKEN:
@@ -48,7 +49,7 @@ def meme():
     
     app.logger.debug("payload: \"%s\"", payload)
     try:
-        slack.post_meme_to_webhook(payload)
+        slack.post_meme_to_webhook(response_url, payload)
     except Exception as e:
         app.logger.error("Error: \"%s\"", e)
         return e
